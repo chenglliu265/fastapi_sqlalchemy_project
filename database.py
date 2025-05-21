@@ -1,17 +1,25 @@
 from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker,DeclarativeBase
+from sqlalchemy.orm import sessionmaker, DeclarativeBase
+import os
+from dotenv import load_dotenv
 
-SQLALCHEMY_DATABASE_URL = 'mysql+mysqlconnector://root:root@localhost/users'
+load_dotenv()
 
-engine = create_engine(SQLALCHEMY_DATABASE_URL)
+
+SQLALCHEMY_DATABASE_URL = os.getenv("DATABASE_URL")
+
+engine = create_engine(SQLALCHEMY_DATABASE_URL, echo=True)
 
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
+
 
 class Base(DeclarativeBase):
     pass
 
+
 def init_db():
     Base.metadata.create_all(bind=engine)
+
 
 def get_db():
     db = SessionLocal()
@@ -19,4 +27,3 @@ def get_db():
         yield db
     finally:
         db.close()
-
