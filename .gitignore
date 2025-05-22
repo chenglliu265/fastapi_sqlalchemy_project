@@ -14,8 +14,8 @@ __pycache__/
 *.sqlite3
 
 # 环境变量和敏感信息
-.env
-*.env
+# .env
+# *.env
 
 # IDE 和编辑器文件
 .idea/
